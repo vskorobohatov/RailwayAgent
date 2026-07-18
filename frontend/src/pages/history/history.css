@@ -1,0 +1,71 @@
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.event-history {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.85rem;
+}
+
+.history-table th {
+  background: #f9fafb;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.history-table tr:hover {
+  background: #f9fafb;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.badge-train_arrivals {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-train_departures {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-evacuations {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.badge-waiting_room {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.field {
+  display: inline-block;
+  margin-right: 8px;
+}
