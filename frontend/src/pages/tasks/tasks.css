@@ -1,0 +1,104 @@
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.tasks-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* Table */
+.tasks-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tasks-table th,
+.tasks-table td {
+  padding: 0.75rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.tasks-table th {
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Row highlighting by status */
+.task-row.status-processing td,
+.task-row.status-classifying td,
+.task-row.status-saving td {
+  background: var(--accent-bg);
+}
+
+.task-row.status-failed td {
+  background: color-mix(in srgb, var(--error) 8%, transparent);
+}
+
+.task-row.status-completed td {
+  background: color-mix(in srgb, var(--success) 6%, transparent);
+}
+
+.task-row.status-cancelled td {
+  opacity: 0.6;
+}
+
+/* Cells */
+.status-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 100px;
+}
+
+.status-icon {
+  font-size: 1rem;
+}
+
+.error-hint {
+  font-size: 0.75rem;
+  color: var(--error);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.step-cell {
+  min-width: 120px;
+  color: var(--muted);
+}
+
+.text-cell {
+  max-width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.time-cell {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  min-width: 55px;
+}
+
+.actions-cell {
+  white-space: nowrap;
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--muted);
+}

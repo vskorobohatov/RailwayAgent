@@ -6,6 +6,7 @@ export function Navbar() {
 
   const links = [
     { to: '/', label: 'Ввод' },
+    { to: '/tasks', label: 'Очередь' },
     { to: '/history', label: 'История' },
     { to: '/report', label: 'Отчёт' },
   ];

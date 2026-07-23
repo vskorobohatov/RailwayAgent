@@ -27,7 +27,7 @@ export interface SseEvent {
   file_path?: string;
 }
 
-export type TaskState = 'pending' | 'processing' | 'classifying' | 'saving' | 'completed' | 'failed';
+export type TaskState = 'pending' | 'processing' | 'classifying' | 'saving' | 'completed' | 'failed' | 'cancelled';
 
 export interface TaskStatus {
   task_id: string;
@@ -35,4 +35,19 @@ export interface TaskStatus {
   step: string;
   result: { message: string; count: number } | null;
   error: string | null;
+}
+
+export interface QueueTask {
+  id: string;
+  input_text: string;
+  status: string;
+  step: string;
+  result: unknown;
+  error: string | null;
+  created_at: string;
+}
+
+export interface ListTasksResponse {
+  tasks: QueueTask[];
+  count: number;
 }

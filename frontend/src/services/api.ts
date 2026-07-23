@@ -1,4 +1,4 @@
-import { ListEventsResponse, ReportResponse, SseEvent, TaskStatus } from '../types';
+import { ListEventsResponse, ListTasksResponse, ReportResponse, SseEvent, TaskStatus } from '../types';
 
 const BASE_URL = '/api';
 
@@ -99,5 +99,27 @@ export async function generateReportStream(
     } catch {
       // Skip malformed SSE data lines
     }
+  }
+}
+
+export async function listTasks(): Promise<ListTasksResponse> {
+  const response = await fetch(`${BASE_URL}/tasks`);
+  if (!response.ok) throw new Error('Не удалось загрузить задачи');
+  return response.json();
+}
+
+export async function cancelTask(task_id: string): Promise<void> {
+  const response = await fetch(`${BASE_URL}/tasks/${task_id}/cancel`, { method: 'POST' });
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.detail || 'Ошибка');
+  }
+}
+
+export async function retryTask(task_id: string): Promise<void> {
+  const response = await fetch(`${BASE_URL}/tasks/${task_id}/retry`, { method: 'POST' });
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.detail || 'Ошибка');
   }
 }

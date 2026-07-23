@@ -13,6 +13,7 @@ class TaskStatus(str, Enum):
     SAVING = "saving"
     COMPLETED = "completed"
     FAILED = "failed"
+    CANCELLED = "cancelled"
 
 
 @dataclass
@@ -41,8 +42,50 @@ class TaskStore:
     async def get(self, task_id: str) -> Task | None:
         return self._tasks.get(task_id)
 
+    async def list_all(self) -> list[dict]:
+        """Return all tasks as serializable dicts."""
+        result = []
+        for task in sorted(self._tasks.values(), key=lambda t: t.created_at, reverse=True):
+            result.append({
+                "id": task.id,
+                "input_text": task.input_text,
+                "status": task.status.value,
+                "step": task.step,
+                "result": task.result,
+                "error": task.error,
+                "created_at": task.created_at.isoformat(),
+            })
+        return result
+
+    async def cancel(self, task_id: str) -> bool:
+        """Mark a pending/processing task as cancelled."""
+        task = self._tasks.get(task_id)
+        if task is None:
+            return False
+        if task.status in (TaskStatus.COMPLETED, TaskStatus.FAILED, TaskStatus.CANCELLED):
+            return False
+        task.status = TaskStatus.CANCELLED
+        task.step = "Отменена"
+        return True
+
+    async def retry(self, task_id: str) -> bool:
+        """Restart a failed/cancelled task."""
+        task = self._tasks.get(task_id)
+        if task is None:
+            return False
+        if task.status not in (TaskStatus.FAILED, TaskStatus.CANCELLED):
+            return False
+        task.status = TaskStatus.PENDING
+        task.step = ""
+        task.error = None
+        task.result = None
+        asyncio.create_task(self._process(task))
+        return True
+
     async def _process(self, task: Task):
         async with self._semaphore:
+            if task.status == TaskStatus.CANCELLED:
+                return
             try:
                 task.status = TaskStatus.PROCESSING
                 task.step = "Подготовка данных"

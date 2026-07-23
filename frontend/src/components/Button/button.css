@@ -17,3 +17,29 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Variants */
+.btn--secondary {
+  background: #6b7280;
+}
+.btn--secondary:hover:not(:disabled) {
+  background: #4b5563;
+}
+
+.btn--danger {
+  background: #dc2626;
+}
+.btn--danger:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+/* Sizes */
+.btn--sm {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+}
+
+.btn--lg {
+  padding: 14px 28px;
+  font-size: 1rem;
+}

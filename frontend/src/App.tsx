@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar/Navbar';
 import { InputPage } from './pages/input/InputPage';
 import { HistoryPage } from './pages/history/HistoryPage';
 import { ReportPage } from './pages/report/ReportPage';
+import { TasksPage } from './pages/tasks/TasksPage';
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<InputPage />} />
+          <Route path="/tasks" element={<TasksPage />} />
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/report" element={<ReportPage />} />
         </Routes>

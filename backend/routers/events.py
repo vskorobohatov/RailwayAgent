@@ -31,6 +31,31 @@ async def get_task_status(task_id: str):
     }
 
 
+@router.get("/tasks")
+async def list_tasks():
+    """Return all tasks in the queue."""
+    tasks = await task_store.list_all()
+    return {"tasks": tasks, "count": len(tasks)}
+
+
+@router.post("/tasks/{task_id}/cancel")
+async def cancel_task(task_id: str):
+    """Cancel a pending or processing task."""
+    ok = await task_store.cancel(task_id)
+    if not ok:
+        raise HTTPException(status_code=400, detail="Не удалось отменить задачу (уже завершена или не найдена)")
+    return {"ok": True}
+
+
+@router.post("/tasks/{task_id}/retry")
+async def retry_task(task_id: str):
+    """Retry a failed or cancelled task."""
+    ok = await task_store.retry(task_id)
+    if not ok:
+        raise HTTPException(status_code=400, detail="Не удалось перезапустить задачу (не найдена или не в статусе failed/cancelled)")
+    return {"ok": True}
+
+
 @router.get("/events")
 async def list_events():
     """Return the 50 most recent events across all tables."""
